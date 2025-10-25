@@ -32,7 +32,7 @@ export default function Home() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              VoiceTask Pro revolutionizes task management with cutting-edge voice recognition. 
+              Speakify revolutionizes task management with cutting-edge voice recognition. 
               Simply speak your tasks, and watch them organize themselves instantly.
             </p>
 
@@ -57,7 +57,7 @@ export default function Home() {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why VoiceTask Pro?</h2>
+            <h2 className="text-4xl font-bold mb-4">Why Speakify?</h2>
             <p className="text-muted-foreground text-lg">
               Powerful features designed for modern productivity
             </p>
@@ -166,7 +166,7 @@ export default function Home() {
             </p>
             <Link to="/tasks">
               <Button size="lg" className="gradient-primary text-white gap-2 group">
-                Start Using VoiceTask Pro
+                Start Using Speakify
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

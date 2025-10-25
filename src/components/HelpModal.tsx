@@ -40,7 +40,7 @@ export const HelpModal = ({ open, onClose }: HelpModalProps) => {
         <DialogHeader>
           <DialogTitle className="text-2xl">Voice Commands Reference</DialogTitle>
           <DialogDescription>
-            Unlock hands-free productivity with VoiceTask Pro! Here are some examples of voice commands you can use.
+            Unlock hands-free productivity with Speakify! Here are some examples of voice commands you can use.
           </DialogDescription>
         </DialogHeader>
 

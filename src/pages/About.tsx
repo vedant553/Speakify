@@ -21,7 +21,7 @@ export default function About() {
             <h1 className="text-5xl md:text-6xl font-bold leading-tight">
               About{" "}
               <span className="bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary-dark))] bg-clip-text text-transparent">
-                VoiceTask Pro
+                Speakify
               </span>
             </h1>
             <p className="text-xl text-muted-foreground">
@@ -38,7 +38,7 @@ export default function About() {
             <h2 className="text-3xl font-bold mb-6 text-center">Our Mission</h2>
             <p className="text-lg text-muted-foreground leading-relaxed text-center">
               We believe task management should be as natural as having a conversation. 
-              VoiceTask Pro was created to eliminate the friction between thought and action—
+              Speakify was created to eliminate the friction between thought and action—
               helping you capture ideas instantly, organize effortlessly, and stay productive 
               without breaking your flow.
             </p>
@@ -215,7 +215,7 @@ export default function About() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Browser Support</h2>
             <p className="text-muted-foreground mb-8">
-              VoiceTask Pro works best on modern browsers with Web Speech API support:
+              Speakify works best on modern browsers with Web Speech API support:
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <span className="px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
@@ -248,7 +248,7 @@ export default function About() {
             </p>
             <Link to="/tasks">
               <Button size="lg" className="gradient-primary text-white gap-2 group">
-                Try VoiceTask Pro Now
+                Try Speakify Now
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
