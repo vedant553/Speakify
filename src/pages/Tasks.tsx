@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import Fuzzysort from 'fuzzysort';
 import { Header } from "@/components/Header";
 import { VoiceInput } from "@/components/VoiceInput";
 import { SearchBar } from "@/components/SearchBar";
@@ -127,6 +128,104 @@ const Index = () => {
     
     const lowerTranscript = transcript.toLowerCase().trim();
     
+    // Detect action type
+    const actionPatterns = {
+      complete: /^(complete|finish|done|mark\s+done|mark\s+as\s+done|check\s+off)\s+/i,
+      delete: /^(delete|remove|cancel)\s+/i,
+      add: /^(add|create|new|make|set|remind\s+me\s+to)\s+/i,
+    };
+    
+    let actionType: 'complete' | 'delete' | 'add' = 'add';
+    let taskQuery = transcript.trim();
+    
+    // Check for completion commands
+    if (actionPatterns.complete.test(transcript)) {
+      actionType = 'complete';
+      taskQuery = transcript.replace(actionPatterns.complete, '').trim();
+    } 
+    // Check for deletion commands
+    else if (actionPatterns.delete.test(transcript)) {
+      actionType = 'delete';
+      taskQuery = transcript.replace(actionPatterns.delete, '').trim();
+    }
+    // Check for add commands
+    else if (actionPatterns.add.test(transcript)) {
+      actionType = 'add';
+      taskQuery = transcript.replace(actionPatterns.add, '').trim();
+    }
+    
+    console.log('Action type:', actionType);
+    console.log('Task query:', taskQuery);
+    
+    // Handle complete/delete actions - search for existing tasks
+    if (actionType === 'complete' || actionType === 'delete') {
+      handleTaskAction(taskQuery, actionType);
+      return;
+    }
+    
+    // Handle add action - create new task (existing logic)
+    handleAddTask(transcript);
+  }
+  
+  // Handle task actions (complete/delete)
+  function handleTaskAction(query: string, action: 'complete' | 'delete') {
+    if (!query || query.length === 0) {
+      displayFeedback(`Please specify which task to ${action}.`);
+      return;
+    }
+    
+    // Use fuzzy matching to find the best matching task
+    const taskTexts = tasks.map(t => t.text);
+    const results = Fuzzysort.go(query, taskTexts, {
+      threshold: -10000, // Lower threshold = more lenient matching
+      limit: 1, // Get only the best match
+    });
+    
+    console.log('Fuzzy match results:', results);
+    
+    if (results.length === 0) {
+      displayFeedback(`No matching task found for "${query}".`);
+      toast({
+        title: "Task Not Found",
+        description: `Couldn't find a task matching "${query}".`,
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Find the task with matching text
+    const matchedText = results[0].target;
+    const matchedTask = tasks.find(t => t.text === matchedText);
+    
+    if (!matchedTask) {
+      displayFeedback(`Task "${query}" not found.`);
+      return;
+    }
+    
+    // Execute the action
+    if (action === 'complete') {
+      if (matchedTask.completed) {
+        displayFeedback(`Task "${matchedTask.text}" is already completed.`);
+      } else {
+        handleToggleComplete(matchedTask.id);
+        displayFeedback(`Marked "${matchedTask.text}" as complete.`);
+        toast({
+          title: "Task Completed",
+          description: `"${matchedTask.text}" marked as done.`,
+        });
+      }
+    } else if (action === 'delete') {
+      handleDelete(matchedTask.id);
+      displayFeedback(`Deleted task "${matchedTask.text}".`);
+    }
+    
+    resetTranscript();
+  }
+  
+  // Handle adding a new task
+  function handleAddTask(transcript: string) {
+    const lowerTranscript = transcript.toLowerCase().trim();
+    
     // Extract task details from voice command
     let priority: TaskPriority = 'medium';
     let category: TaskCategory = 'other';
@@ -177,10 +276,10 @@ const Index = () => {
       }
     }
     
-    // Extract task text - IMPROVED VERSION
+    // Extract task text
     let taskText = transcript.trim();
     
-    // Only remove trigger words at the START
+    // Remove trigger words at the START
     const triggerPatterns = [
       /^(add|create|new|make|set)\s+(a\s+)?(task|reminder|note)?\s*/i,
       /^(remind\s+me\s+to|reminder\s+to)\s+/i
@@ -193,7 +292,7 @@ const Index = () => {
     // Remove priority keywords
     taskText = taskText.replace(/\b(high|medium|low)\s+priority\b/gi, '');
     
-    // Remove date references at the END or with specific prepositions
+    // Remove date references
     taskText = taskText.replace(/\s+(for|by|on|due)\s+(today|tomorrow)/gi, '');
     taskText = taskText.replace(/\s+in\s+\d+\s+days?\b/gi, '');
     
