@@ -243,15 +243,17 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-bold">
               Experience the Future of Task Management
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground mb-8">
               Stop typing. Start speaking. Transform your productivity today.
             </p>
-            <Link to="/tasks">
+            <div className="mt-4">
+              <Link to="/tasks">
               <Button size="lg" className="gradient-primary text-white gap-2 group">
                 Try Speakify Now
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

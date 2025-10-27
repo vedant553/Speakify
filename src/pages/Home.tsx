@@ -161,15 +161,17 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold">
               Ready to Boost Your Productivity?
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground mb-8">
               Join thousands of users who've transformed their workflow with voice-powered task management.
             </p>
-            <Link to="/tasks">
+            <div className="mt-4">
+              <Link to="/tasks">
               <Button size="lg" className="gradient-primary text-white gap-2 group">
                 Start Using Speakify
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
