@@ -2,6 +2,9 @@
 
 Speakify is a modern task management application that allows you to manage your tasks using natural voice commands. Built with cutting-edge web technologies, Speakify makes task management as easy as having a conversation.
 
+### Live Demo Link 1: https://speakifyy.vercel.app/
+### Live Demo Link 2: https://speakifyy.netlify.app/
+
 ## Key Features
 
 - **Voice Task Management**: Add, complete, or delete tasks using natural voice commands
